@@ -1,0 +1,179 @@
+AI Powered Fake News Detection Application
+System Overview – Standard One-Click Deployment
+Introduction
+
+The AI Powered Fake News Detection Application is an evidence-based misinformation verification system designed to analyze textual claims, retrieve real-world supporting evidence from the web, apply semantic reasoning, and return a final verdict with a clear explanation.
+
+The system combines transformer-based machine learning models, web evidence retrieval, and deterministic reasoning logic to ensure reliable and explainable fact-checking. A web-based interface allows end users to submit claims and receive verdicts instantly. The entire system is containerized and can be launched with a single click for local or public access.
+
+The project is showcased under the expo name TEJAS, but the core application remains a standalone AI-powered fact-checking platform.
+
+Purpose
+
+The system is built to:
+
+Detect and verify potentially false or misleading information.
+
+Retrieve evidence from multiple trusted web sources.
+
+Apply semantic similarity and contradiction detection.
+
+Produce a deterministic verdict with justification.
+
+Provide a simple web interface for public users.
+
+Operate as a continuously running service when deployed on a server.
+
+System Capabilities
+1. Text-Based Claim Verification
+
+Accepts user-submitted text claims.
+
+Uses a transformer-based classifier for model confidence signaling.
+
+Performs semantic search for related evidence from the web.
+
+Ranks evidence by relevance and source authority.
+
+Detects contradictions using Natural Language Inference (NLI).
+
+Produces final verdicts:
+
+TRUE
+
+FALSE
+
+INSUFFICIENT
+
+2. Evidence-Based Reasoning Engine
+
+Multi-source web evidence retrieval.
+
+Cross-domain corroboration logic.
+
+Operator-driven reasoning to handle different claim types.
+
+Priority-based contradiction detection.
+
+Source authority scoring for trust weighting.
+
+3. AI-Generated Explanations
+
+Verdict generation remains deterministic.
+
+An AI explanation agent produces human-readable justifications.
+
+The AI layer cannot alter the verdict.
+
+Ensures transparency and explainability.
+
+4. REST API Service
+
+FastAPI backend with structured endpoints.
+
+JSON-based request and response schema.
+
+Swagger documentation for testing.
+
+Ready for external integrations.
+
+5. Orchestration Layer
+
+n8n workflow orchestrates:
+
+Incoming public requests
+
+Calls to the fact-check API
+
+AI explanation generation
+
+Structured response return
+
+6. Web Frontend
+
+Browser-based interface for end users.
+
+Allows claim input and result visualization.
+
+Displays verdict, explanation, and evidence sources.
+
+No technical knowledge required to use.
+
+7. One-Click Deployment
+
+Fully Dockerized system:
+
+Fact-check backend container
+
+Orchestration container
+
+Frontend container
+
+Single Windows batch file to start the entire system.
+
+Automatic model warm-up and readiness checks.
+
+8. Public Accessibility
+
+Secure tunneling exposes the system online.
+
+Remote users can access the application from any device.
+
+No manual IP or network reconfiguration required.
+
+9. Platform Independence
+
+Runs on CPU-only hardware.
+
+No GPU required.
+
+Works on standard laptops.
+
+Ready for cloud deployment.
+
+Operational Flow
+User Browser
+     ↓
+Public Web Frontend
+     ↓
+Orchestration Webhook
+     ↓
+Fact-Check API
+     ↓
+Evidence Retrieval + Reasoning
+     ↓
+AI Explanation Agent
+     ↓
+Final Verdict + Explanation
+
+Current Limitations
+
+Accepts only text-based claims.
+
+Image-based claim verification is not yet implemented.
+
+OCR integration planned as the next upgrade.
+
+Current System State
+
+The application is now:
+
+Fully functional
+
+Evidence-driven
+
+Explainable
+
+Publicly accessible
+
+One-click deployable
+
+Ready for demonstrations and further research upgrades
+
+Next Planned Upgrade
+
+Image upload support
+
+OCR-based text extraction
+
+Routing OCR output into the existing text fact-check pipeline

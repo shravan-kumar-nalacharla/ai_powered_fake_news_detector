@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Fake News Detector | Team TJ-DS-10</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: ['class', '[data-theme="dark"]'],
+        }
+    </script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</head>
+
+<body>
+
+    <!-- DRAG DROP OVERLAY (Hidden by default) -->
+    <div id="dragOverlay" class="drag-overlay">
+        <div class="upload-box" id="uploadClickTarget">
+            <i class="ph-duotone ph-file-cloud upload-icon"></i>
+            <p>Click to upload image</p>
+        </div>
+    </div>
+
+    <!-- NAVBAR -->
+    <nav class="glass-nav">
+        <div class="nav-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <img src="assets/penguin_logo.jpg" alt="Logo"
+                        style="height: 32px; width: auto; border-radius: 50%;">
+                </div>
+                <span class="logo-text">Fake News Detector</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="about.html">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="disclaimer.html">Disclaimer</a>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark Mode">
+                    <i class="ph-fill ph-moon"></i>
+                </button>
+            </div>
+            <button id="mobileMenuBtn" class="mobile-menu-btn" aria-label="Toggle Menu">
+                <i class="ph-bold ph-list"></i>
+            </button>
+        </div>
+    </nav>
+
+    <header class="hero-section">
+        <div class="container">
+            <h1 class="headline">
+                AI Powered Fake News <br>
+                <span class="text-gradient">Detection Application</span>
+            </h1>
+            <p class="sub-headline">
+                Instantly verify news, viral tweets, and media using our multi-source AI agent.
+            </p>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- NEW SEARCH BAR INPUT SECTION -->
+        <section class="search-container-wrapper" id="inputSection">
+            <!-- From Uiverse.io by dorian_8749 -->
+            <div class="w-full py-4">
+                <div class="relative max-w-xl w-full mx-auto">
+                    <!-- Waiting Penguin Video -->
+                    <div class="waiting-penguin-container">
+                        <video src="assets/penguine_waiting.webm" autoplay loop muted playsinline
+                            class="waiting-penguin-video"></video>
+                    </div>
+
+                    <div class="relative flex flex-col bg-gray-100 dark:bg-black/5" style="border-radius: 0.75rem;">
+                        <!-- Light mode: gray-100, Dark: transparent black -->
+                        <textarea
+                            class="w-full min-h-[52px] max-h-[200px] rounded-xl rounded-b-none px-4 py-3 bg-white text-gray-900 placeholder:text-gray-500 border-0 outline-none resize-none focus:ring-0 focus:outline-none leading-[1.2] dark:bg-black dark:text-white dark:placeholder:text-white/70 shadow-sm dark:shadow-none"
+                            placeholder="Search the web or paste text to verify..." id="claimInput"
+                            style="border-radius: 0.75rem 0.75rem 0 0;"></textarea>
+
+                        <div class="h-12 bg-white dark:bg-black rounded-b-xl flex items-center justify-between px-3 shadow-sm dark:shadow-none"
+                            style="border-radius: 0 0 0.75rem 0.75rem;">
+                            <div class="flex items-center gap-2">
+                                <!-- Image Upload Label -->
+                                <label
+                                    class="cursor-pointer rounded-lg p-2 bg-gray-100 hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10 transition-colors"
+                                    title="Upload Image">
+                                    <input class="hidden" type="file" id="imageInput" accept="image/*"
+                                        style="display:none;" />
+                                    <svg class="text-gray-500 hover:text-gray-900 dark:text-white/40 dark:hover:text-white transition-colors"
+                                        stroke-linejoin="round" stroke-linecap="round" stroke-width="2"
+                                        stroke="currentColor" fill="none" viewBox="0 0 24 24" height="16" width="16"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48">
+                                        </path>
+                                    </svg>
+                                </label>
+
+                                <!-- Voice Button (Microphone) -->
+                                <button
+                                    class="cursor-pointer rounded-lg p-2 bg-gray-100 hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10 text-gray-500 hover:text-gray-900 dark:text-white/40 dark:hover:text-white transition-colors"
+                                    type="button" id="voiceBtn" title="Voice Input">
+                                    <!-- Inserted Microphone SVG -->
+                                    <svg fill="currentColor" width="16px" height="16px" viewBox="-3 0 19 19"
+                                        xmlns="http://www.w3.org/2000/svg" class="cf-icon-svg">
+                                        <path
+                                            d="M11.665 7.915v1.31a5.257 5.257 0 0 1-1.514 3.694 5.174 5.174 0 0 1-1.641 1.126 5.04 5.04 0 0 1-1.456.384v1.899h2.312a.554.554 0 0 1 0 1.108H3.634a.554.554 0 0 1 0-1.108h2.312v-1.899a5.045 5.045 0 0 1-1.456-.384 5.174 5.174 0 0 1-1.641-1.126 5.257 5.257 0 0 1-1.514-3.695v-1.31a.554.554 0 1 1 1.109 0v1.31a4.131 4.131 0 0 0 1.195 2.917 3.989 3.989 0 0 0 5.722 0 4.133 4.133 0 0 0 1.195-2.917v-1.31a.554.554 0 1 1 1.109 0zM3.77 10.37a2.875 2.875 0 0 1-.233-1.146V4.738A2.905 2.905 0 0 1 3.77 3.58a3 3 0 0 1 1.59-1.59 2.902 2.902 0 0 1 1.158-.233 2.865 2.865 0 0 1 1.152.233 2.977 2.977 0 0 1 1.793 2.748l-.012 4.487a2.958 2.958 0 0 1-.856 2.09 3.025 3.025 0 0 1-.937.634 2.865 2.865 0 0 1-1.152.233 2.905 2.905 0 0 1-1.158-.233A2.957 2.957 0 0 1 3.77 10.37z" />
+                                    </svg>
+                                </button>
+
+                                <!-- Camera Button -->
+                                <button
+                                    class="cursor-pointer rounded-lg p-2 bg-gray-100 hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10 text-gray-500 hover:text-gray-900 dark:text-white/40 dark:hover:text-white transition-colors"
+                                    type="button" id="cameraBtn" title="Open Camera">
+                                    <!-- Inserted Camera SVG -->
+                                    <svg width="16px" height="16px" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M12 16C13.6569 16 15 14.6569 15 13C15 11.3431 13.6569 10 12 10C10.3431 10 9 11.3431 9 13C9 14.6569 10.3431 16 12 16Z"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path
+                                            d="M3 16.8V9.2C3 8.0799 3 7.51984 3.21799 7.09202C3.40973 6.71569 3.71569 6.40973 4.09202 6.21799C4.51984 6 5.0799 6 6.2 6H7.25464C7.37758 6 7.43905 6 7.49576 5.9935C7.79166 5.95961 8.05705 5.79559 8.21969 5.54609C8.25086 5.49827 8.27836 5.44328 8.33333 5.33333C8.44329 5.11342 8.49827 5.00346 8.56062 4.90782C8.8859 4.40882 9.41668 4.08078 10.0085 4.01299C10.1219 4 10.2448 4 10.4907 4H13.5093C13.7552 4 13.8781 4 13.9915 4.01299C14.5833 4.08078 15.1141 4.40882 15.4394 4.90782C15.5017 5.00345 15.5567 5.11345 15.6667 5.33333C15.7216 5.44329 15.7491 5.49827 15.7803 5.54609C15.943 5.79559 16.2083 5.95961 16.5042 5.9935C16.561 6 16.6224 6 16.7454 6H17.8C18.9201 6 19.4802 6 19.908 6.21799C20.2843 6.40973 20.5903 6.71569 20.782 7.09202C21 7.51984 21 8.0799 21 9.2V16.8C21 17.9201 21 18.4802 20.782 18.908C20.5903 19.2843 20.2843 19.5903 19.908 19.782C19.4802 20 18.9201 20 17.8 20H6.2C5.0799 20 4.51984 20 4.09202 19.782C3.71569 19.5903 3.40973 19.2843 3.21799 18.908C3 18.4802 3 17.9201 3 16.8Z"
+                                            stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </button>
+
+                                <!-- Search Button -->
+                                <button
+                                    class="rounded-full flex items-center gap-2 px-1.5 py-1 border h-8 cursor-pointer bg-sky-500/15 hover:bg-sky-500/20 border-sky-400 text-sky-500"
+                                    type="button" id="verifyBtn" onclick="verifyClaim()">
+                                    <div class="w-4 h-4 flex items-center justify-center shrink-0">
+                                        <svg class="text-sky-500" stroke-linejoin="round" stroke-linecap="round"
+                                            stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24"
+                                            height="16" width="16" xmlns="http://www.w3.org/2000/svg">
+                                            <circle r="10" cy="12" cx="12"></circle>
+                                            <path d="M2 12h20"></path>
+                                            <path
+                                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <span class="text-sm text-sky-500">Search</span>
+                                </button>
+                            </div>
+
+                            <!-- Right Check Button (Keep generic or remove?) -->
+                            <!-- Keeping it as a 'Submit' alternative or 'Enter' visual hint -->
+                            <div class="">
+                                <button
+                                    class="rounded-lg p-2 bg-gray-100 hover:bg-gray-200 dark:bg-white/5 dark:hover:bg-white/10 text-gray-500 hover:text-gray-900 dark:text-white/40 dark:hover:text-white cursor-pointer transition-colors"
+                                    type="button" onclick="verifyClaim()">
+                                    <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2"
+                                        stroke="currentColor" fill="none" viewBox="0 0 24 24" height="16" width="16"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="m22 2-7 20-4-9-9-4Z"></path>
+                                        <path d="M22 2 11 13"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CAMERA MODAL -->
+        <div id="cameraModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center"
+            style="display: none; background: rgba(0,0,0,0.8); position: fixed; top:0; left:0; width:100%; height:100%; z-index: 1000; justify-content: center; align-items: center;">
+            <div class="bg-white p-4 rounded-lg max-w-lg w-full relative"
+                style="background:var(--card-bg); color: var(--text-color); padding: 20px; border-radius: 12px; max-width: 500px; width: 90%;">
+                <h3 class="text-lg font-bold mb-2">Take a Photo</h3>
+                <video id="cameraVideo" autoplay playsinline
+                    style="width: 100%; background: #000; border-radius: 8px; margin-bottom: 12px;"></video>
+                <canvas id="cameraCanvas" style="display: none;"></canvas>
+                <div class="flex justify-between gap-4 mt-4"
+                    style="display: flex; justify-content: space-between; gap: 10px; margin-top: 10px;">
+                    <button id="closeCameraBtn"
+                        style="padding: 8px 16px; border: 1px solid var(--border-color); background: transparent; color: var(--text-color); border-radius: 6px; cursor: pointer;">Cancel</button>
+                    <button id="captureBtn"
+                        style="padding: 8px 16px; background: var(--accent); color: white; border: none; border-radius: 6px; cursor: pointer;">Capture</button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- LOADING ANIMATION -->
+        <section id="loadingSection" class="loader-container">
+            <div class="loader"></div>
+            <p class="loading-text" id="loadingText">Analyzing text...</p>
+        </section>
+
+        <!-- RESULT SECTION -->
+        <section id="resultSection" style="display: none; margin-bottom: 80px;">
+            <div class="result-grid">
+                <!-- Result Card -->
+                <div class="glass-card result-card">
+                    <div class="result-header" style="position: relative;">
+                        <div>
+                            <span class="verdict-tag" id="verdictBadge">VERIFIED</span>
+                            <h2 id="resultTitle" style="font-size: 1.8rem;">Claim Analyzed</h2>
+
+                            <!-- Display User Claim -->
+                            <div
+                                style="margin-top: 12px; margin-bottom: 8px; padding: 12px; background: var(--bg-color); border-radius: 8px; border-left: 4px solid var(--accent);">
+                                <span
+                                    style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase;">You
+                                    Asked:</span>
+                                <p id="userClaimText"
+                                    style="font-size: 1.1rem; font-weight: 500; color: var(--text-color); margin-top: 4px; font-style: italic;">
+                                    "..."</p>
+                            </div>
+                        </div>
+
+                        <!-- Result Penguin Video Container -->
+                        <div id="resultPenguinContainer" class="result-penguin-container"></div>
+
+                        <div style="font-size: 40px; color: var(--text-color);">
+                            <i class="ph-duotone ph-check-circle" id="verdictIcon"></i>
+                        </div>
+                    </div>
+
+                    <div id="resultContent" style="margin-top: 24px;"></div>
+
+                    <button class="btn-primary" onclick="window.location.reload()"
+                        style="margin-top: 32px; background: var(--accent); color: white; border: none; padding: 12px 24px; border-radius: 99px; cursor: pointer; font-weight: 600; transition: 0.2s;">
+                        Verify Another Claim
+                    </button>
+                </div>
+
+
+            </div>
+        </section>
+
+        <!-- NEWSLETTER -->
+        <section style="margin-top: 80px; text-align: center;">
+            <h3 style="margin-bottom: 16px;">Join the Truth Squad</h3>
+            <p style="color: var(--text-muted); margin-bottom: 24px;">Get weekly reports on trending misinformation.</p>
+            <div style="display: flex; gap: 12px; justify-content: center; max-width: 400px; margin: 0 auto;">
+                <input type="email" id="emailInput" placeholder="Your email address"
+                    style="padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); width: 100%; background: var(--card-bg); color: var(--text-color);">
+                <button class="btn-primary" onclick="subscribeNewsletter()"
+                    style="padding: 12px 24px;">Subscribe</button>
+            </div>
+            <p id="newsletterMsg" style="margin-top: 12px; font-size: 0.9rem;"></p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <h2 class="human-font">Truth in Details<span style="color: var(--accent);">.</span></h2>
+                <p style="opacity: 0.8; max-width: 300px;">
+                    Combating misinformation with advanced AI analysis. Verify news sources and detect fake content
+                    instantly.
+                </p>
+                <div style="margin-top: 24px; opacity: 0.6; font-size: 0.9rem;">
+                    &copy; 2026 Team TJ-DS-10.
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 60px;">
+                <div class="footer-links">
+                    <h4 style="margin-bottom: 16px; color: white;">Product</h4>
+                    <a href="index.html">Home</a>
+                    <a href="about.html">FactCheck Engine</a>
+                    <a href="blog.html">Live Feed</a>
+                    <a href="https://huggingface.co/shravan1nala/fake_news_detection_model_v3.1" target="_blank">Our
+                        Model</a>
+                    <a href="https://huggingface.co/datasets/shravan1nala/tejas-fake-news-dataset-v3"
+                        target="_blank">Our Dataset</a>
+                </div>
+                <div class="footer-links">
+                    <h4 style="margin-bottom: 16px; color: white;">Legal</h4>
+                    <a href="privacy.html">Privacy</a>
+                    <a href="terms.html">Terms</a>
+                    <a href="disclaimer.html">Disclaimer</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

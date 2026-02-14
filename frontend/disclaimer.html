@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disclaimer | Tejas FactCheck AI</title>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@700&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</head>
+
+<body>
+
+    <div class="mesh-background">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <nav class="glass-nav">
+        <div class="container nav-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><i class="ph-fill ph-shield-check"></i></div>
+                <span class="logo-text">FactCheck<span class="accent">.AI</span></span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="disclaimer.html" class="active">Disclaimer</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark Mode"
+                    style="border: 1px solid var(--border-color); background: transparent; color: var(--text-color); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                    <i class="ph-fill ph-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="padding-top: 60px; padding-bottom: 60px;">
+        <div class="glass-card result-card">
+            <div class="result-header">
+                <div>
+                    <h1 class="headline" style="font-size: 2.5rem; margin-bottom: 0;">Disclaimer</h1>
+                    <p class="sub-headline" style="margin: 0; font-size: 1rem;">Important information about our AI
+                        technology</p>
+                </div>
+                <div class="icon-circle">
+                    <i class="ph-duotone ph-warning-circle" style="font-size: 32px;"></i>
+                </div>
+            </div>
+
+            <div class="summary">
+                <h3 style="margin-bottom: 12px; color: var(--dark);">1. AI Limitations</h3>
+                <p>
+                    Tejas FactCheck AI is an experimental project developed for the Tejas 2k26 Expo.
+                    While we strive for accuracy, the Artificial Intelligence models used to analyze claims
+                    may occasionally produce incorrect or misleading information ("hallucinations").
+                    This tool should be used as a preliminary research aid, not as a definitive source of truth.
+                </p>
+
+                <h3 style="margin-bottom: 12px; color: var(--dark);">2. No Legal Advice</h3>
+                <p>
+                    The information provided by this application is for educational and informational purposes only.
+                    It does not constitute legal, medical, or professional advice. Always verify important information
+                    with primary sources and qualified professionals.
+                </p>
+
+                <h3 style="margin-bottom: 12px; color: var(--dark);">3. Third-Party Data</h3>
+                <p>
+                    Our system aggregates data from various sources across the web. We do not control
+                    and are not responsible for the content, privacy policies, or practices of any third-party
+                    websites or services that may be referenced in our analysis.
+                </p>
+
+                <h3 style="margin-bottom: 12px; color: var(--dark);">4. Project Status</h3>
+                <p>
+                    This is a student project and is provided "as is" without any warranties, express or implied.
+                    Availability and performance may vary.
+                </p>
+            </div>
+
+            <div style="margin-top: 32px; text-align: center;">
+                <a href="index.html" class="btn-primary" style="display: inline-flex; width: auto;">
+                    <i class="ph-bold ph-arrow-left"></i>
+                    <span>Back to Home</span>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2026 AI Project (Tejas Expo). Built by <strong>Team TJ-DS-10</strong>.</p>
+            <div class="footer-links">
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+                <a href="disclaimer.html">Disclaimer</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

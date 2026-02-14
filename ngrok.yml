@@ -1,0 +1,18 @@
+version: "2"
+authtoken: 2tppcdr91oTSqqdF20J1XjoCnmh_78JibgHRS6WN2oAKkmtdv
+update_channel: stable
+
+tunnels:
+  # 1. FIXED DOMAIN -> Goes to n8n (Port 5555)
+  tejas_n8n:
+    proto: http
+    addr: 5555
+    domain: interlacustrine-candace-pleasedly.ngrok-free.dev
+
+  # 2. RANDOM DOMAIN -> Goes to Website (Port 8080)
+  tejas_web:
+    proto: http
+    addr: 8080
+    # No domain specified here = Ngrok assigns a random one
+
+    

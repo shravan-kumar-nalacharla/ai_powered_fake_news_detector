@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | AI Fake News Detector</title>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</head>
+
+<body>
+
+    <nav class="glass-nav">
+        <div class="container nav-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><i class="ph-fill ph-brain"></i></div>
+                <span class="logo-text">AI Detector</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html" class="active">About</a>
+                <a href="blog.html">Blog</a>
+                <a href="disclaimer.html">Disclaimer</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+                <button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark Mode"
+                    style="border: 1px solid var(--border-color); background: transparent; color: var(--text-color); width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+                    <i class="ph-fill ph-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <header class="hero-section" style="text-align: left; padding: 60px 0;">
+            <h1 class="headline" style="font-size: 3rem;">Tejas v3 Retrain</h1>
+            <p class="sub-headline" style="margin: 0; color: #111;">
+                A continuing fine-tuning of the DistilBERT architecture focused on improving generalization, stability,
+                and precision in misinformation detection.
+            </p>
+        </header>
+
+        <!-- INTRO -->
+        <section class="glass-card result-card">
+            <h2 style="font-size: 1.5rem; margin-bottom: 24px;">Project Vision</h2>
+            <p style="margin-bottom: 16px;">
+                The <strong>AI Powered Fake News Detection Application</strong> is an intelligent platform designed to
+                help users verify online information and protect themselves from misinformation. With the rapid spread
+                of fake news across digital platforms, this project provides a reliable and easy-to-use solution for
+                checking the authenticity of online content.
+            </p>
+            <p>
+                This model is designed to act as a classification signal within an evidence-based fact-checking system
+                rather than a standalone decision-maker.
+            </p>
+        </section>
+
+        <!-- ENGINE LOGIC -->
+        <section class="glass-card result-card" style="margin-bottom: 60px;">
+            <div class="result-header">
+                <div>
+                    <h2 style="font-size: 2rem; margin-bottom: 8px;">The FactCheck Engine</h2>
+                    <p style="color: var(--text-muted);">How our hybrid reasoning system works</p>
+                </div>
+                <div style="font-size: 32px; color: var(--accent);">
+                    <i class="ph-duotone ph-cpu"></i>
+                </div>
+            </div>
+
+            <p style="margin-bottom: 32px; font-size: 1.05rem; color: var(--text-color);">
+                Unlike simple classifiers that only look at text patterns, our system uses a <strong>multi-step
+                    reasoning pipeline</strong> (`factcheck_engine.py`) to verify claims against live evidence from the
+                web.
+            </p>
+
+            <div class="feature-grid" style="grid-template-columns: repeat(2, 1fr);">
+                <div class="feature-item">
+                    <h4>1. Operator-Driven Analysis</h4>
+                    <p>The engine first identifies the <strong>intent</strong> of the claim (e.g., "Exclusivity" claims
+                        like 'First country to...', "Temporal" events, or "Set Membership"). This prevents generic
+                        processing.</p>
+                </div>
+                <div class="feature-item">
+                    <h4>2. Live Evidence Retrieval</h4>
+                    <p>It queries the live web (DuckDuckGo) to fetch the latest news snippets, ensuring the model isn't
+                        limited to its training data cutoff.</p>
+                </div>
+                <div class="feature-item">
+                    <h4>3. NLI Verification</h4>
+                    <p>We use a <strong>Natural Language Inference (NLI)</strong> model (`roberta-large-mnli`) to
+                        explicitly check for contradictions between the claim and the retrieved evidence.</p>
+                </div>
+                <div class="feature-item">
+                    <h4>4. Safety & Precision</h4>
+                    <p>If no sufficient evidence is found, the system defaults to "INSUFFICIENT" rather than
+                        hallucinating a verdict. This significantly reduces the limitations of standard LLMs.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- EVALUATION RESULTS -->
+        <section style="margin: 60px 0;">
+            <h2 style="font-size: 2rem; margin-bottom: 32px; letter-spacing: -1px;">Evaluation Results (Test Set)</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                <div class="glass-card" style="padding: 24px;">
+                    <div style="font-size: 3rem; font-weight: 700;">0.8822</div>
+                    <div style="color: #666; font-weight: 600;">Accuracy</div>
+                </div>
+                <div class="glass-card" style="padding: 24px;">
+                    <div style="font-size: 3rem; font-weight: 700;">0.9028</div>
+                    <div style="color: #666; font-weight: 600;">Precision</div>
+                </div>
+                <div class="glass-card" style="padding: 24px;">
+                    <div style="font-size: 3rem; font-weight: 700;">0.8528</div>
+                    <div style="color: #666; font-weight: 600;">Recall</div>
+                </div>
+                <div class="glass-card" style="padding: 24px;">
+                    <div style="font-size: 3rem; font-weight: 700;">0.8771</div>
+                    <div style="color: #666; font-weight: 600;">F1 Score</div>
+                </div>
+            </div>
+            <p style="margin-top: 24px; color: #555;">
+                <strong>Loss: 0.2811</strong>. These results demonstrate strong generalization and high precision,
+                making the model suitable for downstream verification pipelines.
+            </p>
+        </section>
+
+        <!-- MODEL DETAILS -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 80px;">
+            <div>
+                <h3 style="margin-bottom: 16px;">Model Description</h3>
+                <ul style="list-style: none; padding-left: 0; line-height: 2;">
+                    <li><strong>Architecture:</strong> DistilBERT (encoder-only Transformer)</li>
+                    <li><strong>Task:</strong> Binary text classification (REAL vs FAKE)</li>
+                    <li><strong>Labels:</strong> 0 → REAL / SUPPORTED, 1 → FAKE / MISINFORMATION</li>
+                    <li><strong>Input:</strong> Short factual claims, headlines, or summarized news text</li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="margin-bottom: 16px;">Framework Versions</h3>
+                <ul style="list-style: none; padding-left: 0; line-height: 2; color: #555;">
+                    <li>Transformers: 4.57.3</li>
+                    <li>PyTorch: 2.9.0+cu126</li>
+                    <li>Datasets: 4.0.0</li>
+                    <li>Tokenizers: 0.22.1</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- USES & LIMITATIONS -->
+        <section class="glass-card result-card" style="margin-bottom: 60px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+                <div>
+                    <h3 style="margin-bottom: 16px;">Intended Uses</h3>
+                    <p style="margin-bottom: 12px;"><strong>Primary:</strong> Acting as a classifier signal in an
+                        automated fake-news / fact-checking system; Assisting evidence-based verification pipelines.</p>
+                    <p><strong>Secondary:</strong> Academic research on misinformation detection; Educational
+                        demonstrations.</p>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 16px; color: #D32F2F;">Limitations</h3>
+                    <p>The model may be overconfident on time-sensitive or emerging claims. It does not perform evidence
+                        retrieval or reasoning. Predictions should not be treated as final truth judgments. Performance
+                        may degrade on domains significantly different from training data.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRAINING DATA -->
+        <section style="margin-bottom: 80px;">
+            <h2 style="font-size: 2rem; margin-bottom: 24px; letter-spacing: -1px;">Training Data & Procedure</h2>
+            <p style="margin-bottom: 24px;">The model was trained on a unified and normalized dataset
+                <strong>shravan1nala/tejas-fake-news-dataset-v3</strong> constructed from:
+            </p>
+
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
+                <div style="border: 1px solid #eee; padding: 24px; border-radius: 8px;">
+                    <h4>LIAR-2 Dataset</h4>
+                    <p style="font-size: 0.9rem; margin-top: 8px; color: #666;">Short political claims; Multi-class
+                        labels normalized to binary; Human-annotated.</p>
+                </div>
+                <div style="border: 1px solid #eee; padding: 24px; border-radius: 8px;">
+                    <h4>FakeNewsNet</h4>
+                    <p style="font-size: 0.9rem; margin-top: 8px; color: #666;">News headlines and social-style
+                        misinformation; Binary real/fake labels.</p>
+                </div>
+                <div style="border: 1px solid #eee; padding: 24px; border-radius: 8px;">
+                    <h4>ErfanMoosavi Dataset</h4>
+                    <p style="font-size: 0.9rem; margin-top: 8px; color: #666;">Longer news articles; News-oriented
+                        misinformation patterns.</p>
+                </div>
+            </div>
+
+            <div style="background: #F8F9FA; padding: 32px; margin-top: 32px; border-radius: 12px;">
+                <h4 style="margin-bottom: 16px;">Training Hyperparameters</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 32px; color: #444;">
+                    <div><strong>Learning Rate:</strong> 2e-5</div>
+                    <div><strong>Batch Size:</strong> 16</div>
+                    <div><strong>Epochs:</strong> 3 (Early Stopped)</div>
+                    <div><strong>Optimizer:</strong> AdamW (fused)</div>
+                    <div><strong>Weight Decay:</strong> 0.01</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURES -->
+        <section class="glass-card result-card">
+            <h2 style="font-size: 2rem; margin-bottom: 32px; letter-spacing: -1px;">How it Helps People</h2>
+            <div style="display: grid; gap: 24px;">
+                <div>
+                    <h3>Multi-Format Fake News Detection</h3>
+                    <p>The application allows users to verify news in multiple ways: Text-based news, social media
+                        posts, headlines, and images (OCR). The system analyzes the input using Artificial Intelligence
+                        and predicts whether the information is real or fake.</p>
+                </div>
+                <div>
+                    <h3>Daily Verified News & Updates</h3>
+                    <p>To keep users continuously informed, the platform provides daily updates on verified real news
+                        and trending fake news topics.</p>
+                </div>
+                <div>
+                    <h3>AI-Based Awareness Voice Alerts</h3>
+                    <p>The platform includes automated awareness voice messages that remind users to verify online
+                        content before trusting or sharing it.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; 2026 AI Project (Tejas Expo). Built by <strong>Team TJ-DS-10</strong>.</p>
+            <div class="footer-links">
+                <a href="about.html">About</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+                <a href="disclaimer.html">Disclaimer</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
